@@ -54,8 +54,8 @@ public class Player extends GameObject {
 
         y += dy*2;
 
-        if (y < 0) y = 0;
-        if (y > (GamePanel.HEIGHT - height)) y = GamePanel.HEIGHT - height;
+//        if (y < 0) y = 0;
+//        if (y > (GamePanel.HEIGHT - height)) y = GamePanel.HEIGHT - height;
     }
 
     public void draw(Canvas canvas){
