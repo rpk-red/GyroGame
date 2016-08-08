@@ -3,15 +3,16 @@ package home.gyrogame;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-public class Backround {
+public class Background {
 
     private Bitmap image;
     private int x, y, dx;
 
-    public Backround(Bitmap res) {
+    public Background(Bitmap res) {
 
         image = res;
         dx = GamePanel.GAMESPEED;
+        y = 0;
     }
     public void update() {
         x += dx;
