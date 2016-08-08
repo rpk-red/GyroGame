@@ -17,9 +17,7 @@ public class TopBorder extends GameObject
 
         image = Bitmap.createBitmap(res, 0, 0, width, height);
     }
-    public void update(){
-        x += dx;
-    }
+    public void update(){x += dx;}
     public void draw(Canvas canvas){
         try{
             canvas.drawBitmap(image, x, y, null);

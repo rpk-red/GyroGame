@@ -33,6 +33,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private boolean bottomDown;
     private int progressDenom;
     private boolean newGameCreated;
+    private boolean clicked;
 
     public GamePanel(Context context){
         super(context);
@@ -47,6 +48,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
 
+        clicked = false;
         random = new Random();
         bg = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.grassbg1));
         player = new Player(BitmapFactory.decodeResource(getResources(),R.drawable.helicopter), 65, 25, 3);
@@ -101,6 +103,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             if (!player.getPlaying()){
                 player.setPlaying(true);
                 player.setUp(true);
+                clicked = true;
 //                Log.d(MainActivity.LOG_TAG, "Player is playing");
             }
             else {
@@ -139,6 +142,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             //check bottom borderd collison
             for(int i = 0; i<bottomBorders.size(); i++){
                 if (collision(bottomBorders.get(i),player)){
+                    Log.d(MainActivity.LOG_TAG, "bottom border collision");
                     player.setPlaying(false);
                 }
             }
@@ -193,10 +197,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         else{
-            newGameCreated = false;
-            if (!newGameCreated) {
-                Log.d(MainActivity.LOG_TAG, "newGame should start");
-                newGame();
+            if (clicked) {
+                newGameCreated = false;
+                if (!newGameCreated) {
+                    Log.d(MainActivity.LOG_TAG, "newGame should start");
+                    newGame();
+                }
             }
         }
     }
@@ -341,7 +347,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             //first top border created
             if (i == 0) {
                 topBorders.add(new TopBorder(BitmapFactory.decodeResource(getResources(), R.drawable.brick),
-                        i * 20, 0, 10));
+                        i, 0, 10));
             }
             else{
                 topBorders.add(new TopBorder(BitmapFactory.decodeResource(getResources(), R.drawable.brick),
@@ -353,7 +359,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             //first bottom border created
             if (i == 0) {
                 bottomBorders.add(new BottomBorder(BitmapFactory.decodeResource(getResources(), R.drawable.brick),
-                        i * 20, HEIGHT-minBorderHeight));
+                        i, HEIGHT-minBorderHeight));
             }
             //adding borders until initial screen is filed
             else{
